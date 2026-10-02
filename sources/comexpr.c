@@ -1871,12 +1871,38 @@ int CoPrintTable(UBYTE *inp)
 			FiniLine();
 			if ( AC.OutputSpaces != NOSPACEFORMAT ) TokenToLine((UBYTE *)"   ");
 		}
-		m = expr;
-/*
+/*copied (and edited) from CoIdExpression*/
+	WORD oldEside, *ow, *mm, *ww, *w = AT.WorkPointer;
+	WORD oldpolyfun = AR.PolyFun;
+	WORD oldCnumlhs = AR.Cnumlhs;
+	if ( NewSort(BHEAD0) || NewSort(BHEAD0) ) {
+		if ( !error ) error = 1;
+		goto finally;
+	}
+	AN.RepPoint = AT.RepCount + 1;
+    ow = (WORD *)(((UBYTE *)(AT.WorkPointer)) + AM.MaxTer);
+	mm = expr; ww = ow;
+	while (*mm) {WORD len = *mm; while (--len >= 0) *ww++ = *mm++;} AT.WorkPointer = ww;
+	AC.lhdollarflag = 0; oldEside = AR.Eside; AR.Eside = RHSIDE;
+	AR.Cnumlhs = 0;
+	AR.PolyFun = 0;
+	if ( Generator(BHEAD ow,0) ) {
+		AR.Eside = oldEside;
+		AR.Cnumlhs = oldCnumlhs;
+		LowerSortLevel(); LowerSortLevel(); AR.PolyFun = oldpolyfun; goto finally;
+	}
+	AR.Eside = oldEside;
+	AR.Cnumlhs = oldCnumlhs;
+	AT.WorkPointer = w;
+	if ( EndSort(BHEAD w,0) < 0 ) { LowerSortLevel(); AR.PolyFun = oldpolyfun; goto finally; }
+	AR.PolyFun = oldpolyfun;
+		LowerSortLevel();
+		m = w;
+
 		WORD lbrac, first;
 		lbrac = 0; first = 1;
 		while ( *m ) {
-			if ( WriteTerm(m,&lbrac,first,1,0) ) {
+			if ( WriteTerm(m,&lbrac,first,0,0) ) {
 				MesPrint("Error while writing table");
 				error = 1;
 				goto finally;
@@ -1886,15 +1912,16 @@ int CoPrintTable(UBYTE *inp)
 		}
 		if ( first ) { TOKENTOLINE(" 0","0") }
 		else if ( lbrac ) { TOKENTOLINE(" )",")") }
-*/
-		while ( *m ) m += *m;
+
+		/*while ( *m ) m += *m;
 		if ( m > expr ) {
-			if ( WriteExpression(expr,(LONG)(m-expr)) ) { error = 1; goto finally; }
+			if ( WriteExpressionexpr,(LONG)(m-expr)) ) { error = 1; goto finally; }
 			AO.OutSkip = 0;
 		}
 		else {
 			TokenToLine((UBYTE *)"0");
-		}
+		}*/
+		AO.OutSkip = 0;
 		TokenToLine((UBYTE *)";");
 		FiniLine();
 	}
