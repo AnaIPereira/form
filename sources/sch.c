@@ -1770,29 +1770,30 @@ int WriteSubTerm(WORD *sterm, WORD first)
 #endif
 			if ( !first ) MultiplyToLine();
 			if ( AC.OutputMode == CMODE ) TokenToLine((UBYTE *)"pow(");
-			//else TokenToLine((UBYTE *)"(");
+			
+			/* Smart check: only wrap base if it is a complex expression */
+			if ( *t > 0 && AC.OutputMode != CMODE ) TokenToLine((UBYTE *)"(");
 			WriteArgument(t);
+			if ( *t > 0 && AC.OutputMode != CMODE ) TokenToLine((UBYTE *)")");
+			
 			if ( AC.OutputMode == FORTRANMODE || AC.OutputMode == PFORTRANMODE
 			 || AC.OutputMode == REDUCEMODE )
-				//TokenToLine((UBYTE *)")**(");
 				TokenToLine((UBYTE *)"**");
 			else if ( AC.OutputMode == CMODE ) TokenToLine((UBYTE *)",");
 			else {
 				UBYTE *Out1 = IsExponentSign();
-				if ( Out1 ) {
-					//TokenToLine((UBYTE *)")");
-					TokenToLine(Out1);
-					//TokenToLine((UBYTE *)"(");
-				}
+				if ( Out1 ) TokenToLine(Out1);
 				else TokenToLine((UBYTE *)"^");
 			}
 			NEXTARG(t)
 			{
-			if (*t>0) TokenToLine((UBYTE *)"(");
-			WriteArgument(t);
-			if (*t>0) TokenToLine((UBYTE *)")");
-			//TokenToLine((UBYTE *)"&)");
+				/* Smart check: only wrap exponent if it is a complex expression */
+				if ( *t > 0 ) TokenToLine((UBYTE *)"(");
+				WriteArgument(t);
+				if ( *t > 0 ) TokenToLine((UBYTE *)")");
 			}
+			
+			if ( AC.OutputMode == CMODE ) TokenToLine((UBYTE *)")");
 			break;
 		case DENOMINATOR :
 #if FUNHEAD != 2
@@ -1805,7 +1806,10 @@ int WriteSubTerm(WORD *sterm, WORD first)
 			break;
 		case SUBEXPRESSION:
 			if ( !first ) MultiplyToLine();
-			//TokenToLine((UBYTE *)"#");
+			
+			/* Only wrap the subexpression if it is raised to an internal power */
+			if ( sterm[3] != 1 ) TokenToLine((UBYTE *)"(");
+			
 			t = cbuf[sterm[4]].rhs[sterm[2]];
 			tt = t;
 			while ( *tt ) tt += *tt;
@@ -1817,7 +1821,10 @@ int WriteSubTerm(WORD *sterm, WORD first)
 				TokenToLine((UBYTE *)"0");
 			}
 			AC.outsidefun = oldoutsidefun;
-			//TokenToLine((UBYTE *)"#");
+			
+			/* Safely close the parenthesis if one was opened */
+			if ( sterm[3] != 1 ) TokenToLine((UBYTE *)")");
+			
 			if ( sterm[3] != 1 ) {
 				UBYTE *Out1 = IsExponentSign();
 				if ( Out1 ) TokenToLine(Out1);
