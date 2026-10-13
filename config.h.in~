@@ -1,0 +1,159 @@
+/* config.h.in.  Generated from configure.ac by autoheader.  */
+
+/* Define to print a stack trace on Terminate. */
+#undef ENABLE_BACKTRACE
+
+/* Define to 1 if you have the <boost/unordered_map.hpp> header file. */
+#undef HAVE_BOOST_UNORDERED_MAP_HPP
+
+/* Define to 1 if you have the <boost/unordered_set.hpp> header file. */
+#undef HAVE_BOOST_UNORDERED_SET_HPP
+
+/* Define to 1 if you have __builtin_popcount function. */
+#undef HAVE_BUILTIN_POPCOUNT
+
+/* Define to 1 if you have clock_gettime. */
+#undef HAVE_CLOCK_GETTIME
+
+/* Define to 1 if you have the <execinfo.h> header file. */
+#undef HAVE_EXECINFO_H
+
+/* Define to 1 if you have the <fcntl.h> header file. */
+#undef HAVE_FCNTL_H
+
+/* Define to 1 if you have ftime. */
+#undef HAVE_FTIME
+
+/* Define to 1 if you have gettimeofday. */
+#undef HAVE_GETTIMEOFDAY
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the <limits.h> header file. */
+#undef HAVE_LIMITS_H
+
+/* Define to 1 if you have __popcnt function. */
+#undef HAVE_POPCNT
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#undef HAVE_STDIO_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the <sys/file.h> header file. */
+#undef HAVE_SYS_FILE_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#undef HAVE_SYS_TIME_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <tr1/unordered_map> header file. */
+#undef HAVE_TR1_UNORDERED_MAP
+
+/* Define to 1 if you have the <tr1/unordered_set> header file. */
+#undef HAVE_TR1_UNORDERED_SET
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to 1 if you have the <unordered_map> header file. */
+#undef HAVE_UNORDERED_MAP
+
+/* Define to 1 if you have the <unordered_set> header file. */
+#undef HAVE_UNORDERED_SET
+
+/* Define to 1 if you have the <windows.h> header file. */
+#undef HAVE_WINDOWS_H
+
+/* Compiling for a Linux system. */
+#undef LINUX
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
+#undef STDC_HEADERS
+
+/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. This
+   macro is obsolete. */
+#undef TIME_WITH_SYS_TIME
+
+/* Compiling for UNIX system */
+#undef UNIX
+
+/* Version number of package */
+#undef VERSION
+
+/* Compiling for WINDOWS system */
+#undef WINDOWS
+
+/* Define to use flint for polynomial arithmetic. */
+#undef WITHFLINT
+
+/* Define to enable the float feature. */
+#undef WITHFLOAT
+
+/* Define to use GMP for long integer arithmetic. */
+#undef WITHGMP
+
+/* Define to use MPFR for long float arithmetic. */
+#undef WITHMPFR
+
+/* Define to use POSIX thread clock. */
+#ifdef WITHPTHREADS
+#undef WITHPOSIXCLOCK
+#endif
+
+/* Define to use zlib for compression. */
+#undef WITHZLIB
+
+/* Define to use zstd for compression. */
+#undef WITHZSTD
+
+/* Number of bits in a file offset, on hosts where this is settable. */
+#undef _FILE_OFFSET_BITS
+
+/* Define for large files, on AIX-style hosts. */
+#undef _LARGE_FILES
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+#undef inline
+#endif

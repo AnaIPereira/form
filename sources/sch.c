@@ -1783,11 +1783,11 @@ int WriteSubTerm(WORD *sterm, WORD first)
 					TokenToLine(Out1);
 					TokenToLine((UBYTE *)"(");
 				}
-				else TokenToLine((UBYTE *)")^(");
+				else TokenToLine((UBYTE *)")^&");
 			}
 			NEXTARG(t)
 			WriteArgument(t);
-			TokenToLine((UBYTE *)")");
+			TokenToLine((UBYTE *)"&");
 			break;
 		case DENOMINATOR :
 #if FUNHEAD != 2
@@ -1800,7 +1800,7 @@ int WriteSubTerm(WORD *sterm, WORD first)
 			break;
 		case SUBEXPRESSION:
 			if ( !first ) MultiplyToLine();
-			TokenToLine((UBYTE *)"(");
+			TokenToLine((UBYTE *)"#");
 			t = cbuf[sterm[4]].rhs[sterm[2]];
 			tt = t;
 			while ( *tt ) tt += *tt;
@@ -1812,7 +1812,7 @@ int WriteSubTerm(WORD *sterm, WORD first)
 				TokenToLine((UBYTE *)"0");
 			}
 			AC.outsidefun = oldoutsidefun;
-			TokenToLine((UBYTE *)")");
+			TokenToLine((UBYTE *)"#");
 			if ( sterm[3] != 1 ) {
 				UBYTE *Out1 = IsExponentSign();
 				if ( Out1 ) TokenToLine(Out1);
@@ -2462,7 +2462,7 @@ int WriteExpression(WORD *terms, LONG ltot)
 	WORD first, btot;
 	WORD OldIsBracket = AO.IsBracket, OldPrintType = AO.PrintType;
 	if ( !AC.outsidefun ) { AO.PrintType &= ~PRINTONETERM; first = 1; }
-	else first = 0;
+	else first = 1;
 	stopper = terms + ltot;
 	btot = -1;
 	while ( terms < stopper ) {
