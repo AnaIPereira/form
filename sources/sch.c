@@ -1769,25 +1769,27 @@ int WriteSubTerm(WORD *sterm, WORD first)
 			t += FUNHEAD - 2;
 #endif
 			if ( !first ) MultiplyToLine();
-			if ( AC.OutputMode == CMODE ) TokenToLine((UBYTE *)"pow(");
-			else TokenToLine((UBYTE *)"(");
+			if ( AC.OutputMode == CMODE ) TokenToLine((UBYTE *)"pow(&");
+			//else TokenToLine((UBYTE *)"(");
 			WriteArgument(t);
 			if ( AC.OutputMode == FORTRANMODE || AC.OutputMode == PFORTRANMODE
 			 || AC.OutputMode == REDUCEMODE )
-				TokenToLine((UBYTE *)")**(");
+				TokenToLine((UBYTE *)"£)**(@");
 			else if ( AC.OutputMode == CMODE ) TokenToLine((UBYTE *)",");
 			else {
 				UBYTE *Out1 = IsExponentSign();
 				if ( Out1 ) {
-					TokenToLine((UBYTE *)")");
+					//TokenToLine((UBYTE *)")");
 					TokenToLine(Out1);
-					TokenToLine((UBYTE *)"(");
+					//TokenToLine((UBYTE *)"(");
 				}
-				else TokenToLine((UBYTE *)")^(");
+				else TokenToLine((UBYTE *)"^");
 			}
 			NEXTARG(t)
+			if ( *t > 0 && AC.OutputMode != CMODE ) TokenToLine((UBYTE *)"(");
 			WriteArgument(t);
-			TokenToLine((UBYTE *)")");
+			if ( *t > 0 || AC.OutputMode == CMODE ) TokenToLine((UBYTE *)")");
+			//TokenToLine((UBYTE *)")");
 			break;
 		case DENOMINATOR :
 #if FUNHEAD != 2
@@ -1796,11 +1798,12 @@ int WriteSubTerm(WORD *sterm, WORD first)
 			if ( first ) TokenToLine((UBYTE *)"1/(");
 			else TokenToLine((UBYTE *)"/(");
 			WriteArgument(t);
-			TokenToLine((UBYTE *)")");
+			TokenToLine((UBYTE *)"&)");
 			break;
 		case SUBEXPRESSION:
 			if ( !first ) MultiplyToLine();
-			TokenToLine((UBYTE *)"(");
+			//TokenToLine((UBYTE *)"(#");
+			if ( sterm[3] != 1 ) TokenToLine((UBYTE *)"(");
 			t = cbuf[sterm[4]].rhs[sterm[2]];
 			tt = t;
 			while ( *tt ) tt += *tt;
@@ -1812,7 +1815,8 @@ int WriteSubTerm(WORD *sterm, WORD first)
 				TokenToLine((UBYTE *)"0");
 			}
 			AC.outsidefun = oldoutsidefun;
-			TokenToLine((UBYTE *)")");
+			//TokenToLine((UBYTE *)"#)");
+			if ( sterm[3] != 1 ) TokenToLine((UBYTE *)")");
 			if ( sterm[3] != 1 ) {
 				UBYTE *Out1 = IsExponentSign();
 				if ( Out1 ) TokenToLine(Out1);
@@ -2462,7 +2466,7 @@ int WriteExpression(WORD *terms, LONG ltot)
 	WORD first, btot;
 	WORD OldIsBracket = AO.IsBracket, OldPrintType = AO.PrintType;
 	if ( !AC.outsidefun ) { AO.PrintType &= ~PRINTONETERM; first = 1; }
-	else first = 0;
+	else first = 1;
 	stopper = terms + ltot;
 	btot = -1;
 	while ( terms < stopper ) {
