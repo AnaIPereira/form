@@ -1769,15 +1769,15 @@ int WriteSubTerm(WORD *sterm, WORD first)
 			t += FUNHEAD - 2;
 #endif
 			if ( !first ) MultiplyToLine();
-			tt = ( *t > 0 && t[ARGHEAD+1] == SUBEXPRESSION ) ? cbuf[t[ARGHEAD+5]].rhs[t[ARGHEAD+3]] : 0;
+			//tt = ( *t > 0 && t[ARGHEAD+1] == SUBEXPRESSION ) ? cbuf[t[ARGHEAD+5]].rhs[t[ARGHEAD+3]] : 0;
 			if ( AC.OutputMode == CMODE ) TokenToLine((UBYTE *)"pow(");
-			else if ( tt && tt[*tt] != 0 ) TokenToLine((UBYTE *)"(");
+			else if ( *t > 0 ) TokenToLine((UBYTE *)"(");
 			//else TokenToLine((UBYTE *)"(");
 			WriteArgument(t);
-			if ( tt && tt[*tt] != 0 && AC.OutputMode != CMODE ) TokenToLine((UBYTE *)")");
+			if ( *t > 0 && AC.OutputMode != CMODE ) TokenToLine((UBYTE *)")");
 			if ( AC.OutputMode == FORTRANMODE || AC.OutputMode == PFORTRANMODE
 			 || AC.OutputMode == REDUCEMODE )
-				TokenToLine((UBYTE *)"£)**(@");
+				TokenToLine((UBYTE *)")**(");
 			else if ( AC.OutputMode == CMODE ) TokenToLine((UBYTE *)",");
 			else {
 				UBYTE *Out1 = IsExponentSign();
@@ -1801,7 +1801,7 @@ int WriteSubTerm(WORD *sterm, WORD first)
 			if ( first ) TokenToLine((UBYTE *)"1/(");
 			else TokenToLine((UBYTE *)"/(");
 			WriteArgument(t);
-			TokenToLine((UBYTE *)"&)");
+			TokenToLine((UBYTE *)")");
 			break;
 		case SUBEXPRESSION:
 			if ( !first ) MultiplyToLine();
