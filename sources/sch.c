@@ -1769,7 +1769,6 @@ int WriteSubTerm(WORD *sterm, WORD first)
 			t += FUNHEAD - 2;
 #endif
 			if ( !first ) MultiplyToLine();
-			//tt = ( *t > 0 && t[ARGHEAD+1] == SUBEXPRESSION ) ? cbuf[t[ARGHEAD+5]].rhs[t[ARGHEAD+3]] : 0;
 			if ( AC.OutputMode == CMODE ) TokenToLine((UBYTE *)"pow(");
 			else if ( *t > 0 ) TokenToLine((UBYTE *)"(");
 			//else TokenToLine((UBYTE *)"(");
